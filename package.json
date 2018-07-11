@@ -1,0 +1,16 @@
+{
+  "name": "recursive-link-scraper",
+  "version": "0.2.0",
+  "description": "\"Recursively Scapes pages and follows links depending on the supplied tree traversal method\"",
+  "main": "index.js",
+  "repository": "https://github.com/michael-fearn/recursive-link-scraper.git",
+  "author": "Michael Fearn <fearn.michael@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "massive": "^5.1.0",
+    "puppeteer": "^1.5.0"
+  }
+}
