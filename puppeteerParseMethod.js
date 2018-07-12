@@ -1,10 +1,5 @@
 const puppeteer = require('puppeteer') 
-const pHF = require('./parseHelperFunctions')
-
-const {
-    ensureEndingBackslash,
-    parseResultsCleaner
-} = pHF
+const parseResultsCleaner = require('./parseResultsCleaner')
 
 module.exports = async function puppeteerParseMethod(url) {
     const browser = await puppeteer.launch()
@@ -16,15 +11,18 @@ module.exports = async function puppeteerParseMethod(url) {
         console.log("page not found")
         return []
     }
-    const hrefList = await page.evaluate( ()  => [...document.links].map(e => e.href))
-    console.log(hrefList)
+    let hrefList
+    try {
+        hrefList = await page.evaluate( ()  => [...document.links].map(e => e.href))
+    } catch(error) {
+        console.log("something failed")
+        await browser.close()
+        return []
+    }
+        
+    
     await browser.close()
 
-    const baseUrl = ensureEndingBackslash(url)
-
-    const cleanedHrefList = parseResultsCleaner(hrefList, baseUrl)
-    const formattedHrefList = ensureEndingBackslash(cleanedHrefList)
-   
-    return formattedHrefList
+    return parseResultsCleaner(hrefList, url)
 }
 // ~.520s overhead to launch and end puppeteer
