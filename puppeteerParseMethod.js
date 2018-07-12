@@ -9,17 +9,22 @@ const {
 module.exports = async function puppeteerParseMethod(url) {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
-    await page.goto(url)
     
+    try {
+        await page.goto(url)
+    } catch(error) {
+        console.log("page not found")
+        return []
+    }
     const hrefList = await page.evaluate( ()  => [...document.links].map(e => e.href))
-    
+    console.log(hrefList)
     await browser.close()
 
     const baseUrl = ensureEndingBackslash(url)
 
-    const formattedHrefList = ensureEndingBackslash(hrefList)
-    const cleanedHrefList = parseResultsCleaner(formattedHrefList, baseUrl)
-
-    return cleanedHrefList
+    const cleanedHrefList = parseResultsCleaner(hrefList, baseUrl)
+    const formattedHrefList = ensureEndingBackslash(cleanedHrefList)
+   
+    return formattedHrefList
 }
 // ~.520s overhead to launch and end puppeteer

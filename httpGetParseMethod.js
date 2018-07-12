@@ -12,7 +12,15 @@ const {
 // Rule of thumb, everything must end with / and must be removed if needed.
 module.exports = async function httpGetParseMethod(url) {
     
-    const response = await axios.get(url)
+    let response;
+
+    try {
+        response = await axios.get(url)
+    } catch(err) {
+        console.log("page not found")
+        return []
+    }
+
     const $ = cheerio.load(response.data)
 
     let hrefList = []
@@ -26,12 +34,10 @@ module.exports = async function httpGetParseMethod(url) {
     
     const baseUrl = ensureEndingBackslash(response.config.url)
 
-    const backSlashedHrefList = ensureEndingBackslash(hrefList)
+    const cleanedHrefList = parseResultsCleaner(hrefList, baseUrl)
+    const backSlashedHrefList = ensureEndingBackslash(cleanedHrefList)
     const formattedHrefList = addBaseUrl(backSlashedHrefList, baseUrl)
-    const cleanedHrefList = parseResultsCleaner(formattedHrefList, baseUrl)
 
-     console.log(cleanedHrefList)
-
-    //return cleanedHrefList
+    return formattedHrefList
 }
 

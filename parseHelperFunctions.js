@@ -40,10 +40,12 @@ module.exports = {
     parseResultsCleaner: (hrefList, baseUrl) => {
         return hrefList
             .filter( href => {
-                return href 
+                return href
+                    && href.startsWith('http')
                     && !href.startsWith('#')  
                     && !href.startsWith(baseUrl + '#') 
                     && !href.startsWith('javascript')
+
             })
     }
 }
