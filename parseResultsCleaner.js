@@ -3,7 +3,7 @@ function ensureEndingBackslash (input) {
     return input.map( href => {
         // Ensuring link string ends with /
         if(!href) {
-            return href
+            return
         }
         if(!href.endsWith('/')) { 
             return href + '/'
