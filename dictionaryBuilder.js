@@ -1,4 +1,4 @@
-module.exports = function dictionaryBuilder ( hrefList, fromPage ) {
+module.exports = function dictionaryBuilder (hrefList, fromPage, currentNodeIndex) {
   
   const reducedHrefList = hrefList.reduce((obj, url) => { 
       obj[url] ? obj[url]++ : obj[url] = 1
@@ -11,9 +11,10 @@ module.exports = function dictionaryBuilder ( hrefList, fromPage ) {
     dictionary.push({
       fromPage,
       toPage: url,
-      count: reducedHrefList[url]
+      count: reducedHrefList[url],
+      currentNodeIndex
     })
   }
 
-  return [dictionary, hrefList]
+  return dictionary
 }

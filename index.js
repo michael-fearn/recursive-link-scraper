@@ -13,7 +13,7 @@ const breadthScraper = require('./breadthScraper')
 
 //     socket.on('send data',  url => {
 //         console.log('caught emit')
-       breadthScraper({}, 2, 'https://www.threadless.com' )
+       breadthScraper('https://www.threadless.com', 3)
 //        // io.sockets.emit('send data', () =>  pageScraper(url))
 //     })
 

@@ -14,7 +14,7 @@ module.exports = async function pageScraper(pageUrl) {
         hrefList =  await puppeteerParseMethod(pageUrl)
     }
    
-    const pageDictionary = dictionaryBuilder(hrefList, pageUrl)
+    
    
-    return pageDictionary
+    return hrefList
 }
